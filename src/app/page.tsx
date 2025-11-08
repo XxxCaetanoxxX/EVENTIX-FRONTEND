@@ -1,6 +1,8 @@
 import { Container } from "../componentes/container";
+import { Footer } from "../componentes/footer";
 import { Header } from "../componentes/header";
 import { InputBusca } from "../componentes/input_busca";
+import { EventSlider } from "../componentes/slider";
 
 export default function Home() {
   return (
@@ -9,9 +11,20 @@ export default function Home() {
       <InputBusca />
 
 
+      {/* espaço separado para o carrousel */}
+
       <Container>
-        <h1 className="text-3xl font-bold underline">Hello world!</h1>
+
+        <EventSlider title="Para Hoje" />
+        <EventSlider title="Próximos Eventos" />
+        <EventSlider title="Rock" />
+        <EventSlider title="Sertanejo" />
+        <EventSlider title="Hip-Hop" />
+        <EventSlider title="Festivais" />
+
       </Container>
+
+      <Footer />
     </>
   );
 }
