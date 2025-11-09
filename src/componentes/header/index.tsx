@@ -27,7 +27,7 @@ export function Header() {
             </button>
 
             <nav
-                className={`${menuOpen ? "flex" : "hidden"} 
+                className={`${menuOpen ? "flex z-1" : "hidden"} 
                 sm:flex flex-col sm:flex-row gap-4 sm:gap-6 font-bold text-center absolute sm:static top-[70px] left-0 w-full sm:w-auto bg-white sm:bg-transparent py-4 sm:py-0 shadow-sm sm:shadow-none`}
             >
                 <a href="#" className="block px-4 py-2 hover:text-[#7B2CBF]">
