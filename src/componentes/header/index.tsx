@@ -1,4 +1,5 @@
 "use client"
+import { useModalStore } from "@/src/app/store/modalStore";
 import { ColorsEnum } from "@/src/styles/colors.enum";
 import Image from "next/image";
 import { useState } from "react";
@@ -7,6 +8,7 @@ import { FiMenu, FiX } from "react-icons/fi";
 
 export function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
+    const {open} = useModalStore();
 
     return (
         <header className="shadow flex justify-between items-center pl-0 pr-4" style={{ backgroundColor: ColorsEnum.BG_HEADER} }>
@@ -36,12 +38,12 @@ export function Header() {
                 <a href="#" className="block px-4 py-2 hover:text-[#7B2CBF]">
                     Meus ingressos
                 </a>
-                <a
-                    href="#"
+                <button
+                    onClick={open}
                     className="block bg-[#F2F2F2] rounded-2xl px-6 py-2 mx-4 sm:mx-0 hover:bg-[#e6e6e6] transition"
                 >
                     Login
-                </a>
+                </button>
             </nav>
 
         </header>
