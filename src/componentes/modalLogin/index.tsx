@@ -12,6 +12,10 @@ export function LoginModal() {
 
     if (!isOpen) return null;
 
+    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+    };
+
     return (
         <div className="fixed inset-0 z-20">
             <div
@@ -30,7 +34,7 @@ export function LoginModal() {
                         height={100}
                     />
 
-                    <form className="pt-6 flex flex-col w-full">
+                    <form className="pt-6 flex flex-col w-full" onSubmit={handleSubmit}>
                         <section className="flex flex-col gap-6">
                             <div className="relative">
                                 <label
@@ -56,19 +60,22 @@ export function LoginModal() {
                                     className="placeholder:pl-2 placeholder:font-semibold w-full border rounded-2xl border-gray-400 p-2 text-sm focus:border-purple-600 focus:ring-0 outline-none"
                                 />
 
-                                {visible ? (
-                                    <FiEyeOff
-                                        onClick={() => setVisible(!visible)}
-                                        size={20}
-                                        className="absolute top-2 right-3 cursor-pointer"
-                                    />
-                                ) : (
-                                    <FiEye
-                                        onClick={() => setVisible(!visible)}
-                                        size={20}
-                                        className="absolute top-2 right-3 cursor-pointer"
-                                    />
-                                )}
+                                <button
+                                    type="button"
+                                    className="absolute top-2 right-3 cursor-pointer"
+                                    onClick={() => setVisible(!visible)}
+                                    aria-label={visible ? "Esconder senha" : "Mostrar senha"}
+                                >
+                                    {visible ? (
+                                        <FiEyeOff
+                                            size={20}
+                                        />
+                                    ) : (
+                                        <FiEye
+                                            size={20}
+                                        />
+                                    )}
+                                </button>
                                 <button className="absolute top-9 font-bold right-3 text-xs hover:underline" style={{ color: ColorsEnum.PRIMARY_PURPLE }}>Esqueci minha senha</button>
                             </div>
                         </section>
@@ -89,10 +96,10 @@ export function LoginModal() {
                             style={{ backgroundColor: ColorsEnum.BACKGROUND_INPUT }}
                         >
                             <FcGoogle size={18} />
-                            <h1>Continue com o Google</h1>
+                            <span>Continue com o Google</span>
                         </button>
 
-                        <h2 className="text-center text-sm font-bold pt-6">
+                        <span className="text-center text-sm font-bold pt-6">
                             Não possui conta?{" "}
                             <a href="#" className="hover:underline"
                                 style={{
@@ -101,7 +108,7 @@ export function LoginModal() {
                                 }}>
                                 Cadastre-se
                             </a>
-                        </h2>
+                        </span>
                     </form>
                 </div>
             </div>
