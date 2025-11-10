@@ -5,16 +5,32 @@ import { ColorsEnum } from "@/src/styles/colors.enum";
 import { FcGoogle } from "react-icons/fc";
 import { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const schema = z.object({
+    email: z.string().email("Digite um email valido").min(1, "Email é obrigatório."),
+    password: z.string().min(1, "Senha é obrigatória.").min(6, "Digite uma senha com pelo menos 6 caracteres."),
+})
+
+type FormData = z.infer<typeof schema>;
 
 export function LoginModal() {
     const { isOpen, close } = useModalStore();
     const [visible, setVisible] = useState(false);
 
+
+    const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
+        resolver: zodResolver(schema),
+    })
+
     if (!isOpen) return null;
 
-    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-        e.preventDefault();
-    };
+    function handleSubmitForm(data: FormData) {
+        console.log("Dados do login:", data);
+        // aqui você chamaria sua API de login
+    }
 
     return (
         <div className="fixed inset-0 z-20">
@@ -34,7 +50,7 @@ export function LoginModal() {
                         height={100}
                     />
 
-                    <form className="pt-6 flex flex-col w-full" onSubmit={handleSubmit}>
+                    <form className="pt-6 flex flex-col w-full" onSubmit={(handleSubmit(handleSubmitForm))}>
                         <section className="flex flex-col gap-6">
                             <div className="relative">
                                 <label
@@ -48,7 +64,13 @@ export function LoginModal() {
                                     type="email"
                                     placeholder="Digite seu email"
                                     className="placeholder:pl-2 placeholder:font-semibold w-full rounded-2xl border border-gray-400 p-2 text-sm focus:border-purple-600 focus:ring-0 outline-none"
+                                    {...register("email")}
                                 />
+                                {errors.email && (
+                                    <span className="text-xs font-semibold text-red-600 mt-1">
+                                        {errors.email.message}
+                                    </span>
+                                )}
                             </div>
 
                             <div className="relative">
@@ -58,8 +80,8 @@ export function LoginModal() {
                                     type={visible ? "text" : "password"}
                                     placeholder="Digite sua senha"
                                     className="placeholder:pl-2 placeholder:font-semibold w-full border rounded-2xl border-gray-400 p-2 text-sm focus:border-purple-600 focus:ring-0 outline-none"
+                                    {...register("password")}
                                 />
-
                                 <button
                                     type="button"
                                     className="absolute top-2 right-3 cursor-pointer"
@@ -77,6 +99,11 @@ export function LoginModal() {
                                     )}
                                 </button>
                                 <button className="absolute top-9 font-bold right-3 text-xs hover:underline" style={{ color: ColorsEnum.PRIMARY_PURPLE }}>Esqueci minha senha</button>
+                                {errors.password && (
+                                    <span className="relative top-1.5 text-xs font-semibold text-red-600 mt-1">
+                                        {errors.password.message}
+                                    </span>
+                                )}
                             </div>
                         </section>
 
