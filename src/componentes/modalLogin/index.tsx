@@ -8,9 +8,10 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useUserStore } from "@/src/app/store/userStore";
 
 const schema = z.object({
-    email: z.string().email("Digite um email valido").min(1, "Email é obrigatório."),
+    email: z.string().email("Digite um email válido.").min(1, "Email é obrigatório."),
     password: z.string().min(1, "Senha é obrigatória.").min(6, "Digite uma senha com pelo menos 6 caracteres."),
 })
 
@@ -27,9 +28,25 @@ export function LoginModal() {
 
     if (!isOpen) return null;
 
-    function handleSubmitForm(data: FormData) {
-        console.log("Dados do login:", data);
-        // aqui você chamaria sua API de login
+    async function handleSubmitForm(data: FormData) {
+        const res = await fetch('http://localhost:3001/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+
+        if (res.status === 200) {
+            const userRes = await fetch("/api/users/me");
+            if (userRes.status === 200) {
+                const userData = await userRes.json();
+                useUserStore.getState().setUser(userData);
+                console.log("User data:", useUserStore.getState().user);
+            }
+            close();
+        }
+
     }
 
     return (

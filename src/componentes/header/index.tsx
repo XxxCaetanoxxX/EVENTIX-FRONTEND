@@ -8,10 +8,10 @@ import { FiMenu, FiX } from "react-icons/fi";
 
 export function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
-    const {open} = useModalStore();
+    const { open } = useModalStore();
 
     return (
-        <header className="shadow flex justify-between items-center pl-0 pr-4" style={{ backgroundColor: ColorsEnum.BG_HEADER} }>
+        <header className="shadow flex justify-between items-center pl-0 pr-4" style={{ backgroundColor: ColorsEnum.BG_HEADER }}>
             <div className="flex items-center">
                 <Image
                     src={"/assets/logo.png"}
