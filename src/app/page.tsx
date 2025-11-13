@@ -1,7 +1,7 @@
 import { Container } from "../componentes/container";
 import { Footer } from "../componentes/footer";
 import { Header } from "../componentes/header";
-import { InputBusca } from "../componentes/input_busca";
+import { InputBusca } from "../componentes/input-busca";
 import { EventSlider } from "../componentes/slider";
 
 export default function Home() {

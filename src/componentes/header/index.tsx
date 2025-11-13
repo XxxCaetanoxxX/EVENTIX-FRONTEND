@@ -2,6 +2,7 @@
 import { useModalStore } from "@/src/app/store/modalStore";
 import { ColorsEnum } from "@/src/styles/colors.enum";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 
@@ -11,16 +12,18 @@ export function Header() {
     const { open } = useModalStore();
 
     return (
-        <header className="shadow flex justify-between items-center pl-0 pr-4" style={{ backgroundColor: ColorsEnum.BG_HEADER }}>
-            <div className="flex items-center">
-                <Image
-                    src={"/assets/logo.png"}
-                    alt="logo"
-                    width={60}
-                    height={60}
-                />
-                <p style={{ color: ColorsEnum.PRIMARY_PURPLE }} className="text-xl font-bold">EVENTIX</p>
-            </div>
+        <header className="shadow-2xl flex justify-between items-center pl-0 pr-4" style={{ backgroundColor: ColorsEnum.BG_HEADER }}>
+
+                <Link className="flex items-center" href={"/"}>
+                    <Image
+                        src={"/assets/logo.png"}
+                        alt="logo"
+                        width={60}
+                        height={60}
+                    />
+                    <p style={{ color: ColorsEnum.PRIMARY_PURPLE }} className="text-xl font-bold">EVENTIX</p>
+                </Link>
+
 
             <button className="sm:hidden text-3xl"
                 onClick={() => setMenuOpen(!menuOpen)}
