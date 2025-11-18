@@ -1,5 +1,6 @@
 "use client";
 
+import { api } from "@/src/lib/axios/api";
 import { useEffect } from "react";
 
 export default function Teste() {
@@ -7,9 +8,8 @@ export default function Teste() {
     getTickets();
 
     async function getTickets() {
-      const res = await fetch("/api/proxy/ticket/all");
-      const data = await res.json();
-      console.log(data);
+      const res = await api("ticket/all");
+      console.log(res.data);
     }
   }, []);
 
