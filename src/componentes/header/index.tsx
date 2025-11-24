@@ -73,8 +73,8 @@ export function Header() {
 
                         {/* Avatar do usuário ou a letra inicial */}
                         <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-[#7B2CBF]">
-                            {user.image ? (
-                                <img src={user.image} alt={user.name} className="w-full h-full object-cover" />
+                            {user.image.path ? (
+                                <img src={user.image.path} alt={user.name} className="w-full h-full object-cover" />
                             ) : (
                                 <div className="w-full h-full bg-gray-300 flex items-center justify-center text-[#7B2CBF]">
                                     {user.name.charAt(0).toUpperCase()}

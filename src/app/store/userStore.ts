@@ -7,7 +7,10 @@ interface User {
     email: string;
     phone: string;
     role: string;
-    image: string;
+    image: ImageProps;
+}
+interface ImageProps{
+    path: string
 }
 
 interface UserState {
