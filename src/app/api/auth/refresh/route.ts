@@ -1,30 +1,28 @@
+import { nest } from "@/src/lib/axios/nest";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL!;
 
 export async function POST() {
     const cookieStore = await cookies();
     const refreshToken = cookieStore.get("refreshToken")?.value;
-
+    
     if (!refreshToken) {
         return NextResponse.json({ message: "Sem refresh token" }, { status: 401 });
     }
 
     try {
-        const response = await fetch(`${BASE_URL}/users/refresh`, {
-            method: "POST",
+        const response = await nest.post('/users/refresh', {}, {
             headers: {
+                Authorization: `Bearer ${refreshToken}`,
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${refreshToken}`
-            },
+            }
         });
 
-        if (!response.ok) {
+        if (response.status !== 201) {
             throw new Error("Falha ao renovar");
         }
 
-        const data = await response.json();
+        const data = response.data;
 
         const { accessToken: newAccess, refreshToken: newRefresh } = data;
 

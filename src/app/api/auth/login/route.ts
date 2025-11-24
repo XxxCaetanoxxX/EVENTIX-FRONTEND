@@ -1,11 +1,11 @@
-import { api } from '@/src/lib/axios/api';
+import { nest } from '@/src/lib/axios/nest';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
   const { email, password } = await req.json();
 
   try {
-    const response = await api.post(`${process.env.NEXT_PUBLIC_BASE_URL}/users/login`, { email, password });
+    const response = await nest.post('/users/login', { email, password });
 
     const { accessToken, refreshToken } = response.data;
 

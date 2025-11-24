@@ -1,5 +1,5 @@
 // src/app/api/users/me/route.ts
-import { api } from '@/src/lib/axios/api';
+import { nest } from '@/src/lib/axios/nest';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {
@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const response = await api.get(`${process.env.NEXT_PUBLIC_BASE_URL}/users/me`, {
+    const response = await nest.get('/users/me', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },

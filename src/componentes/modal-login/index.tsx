@@ -29,7 +29,7 @@ export function LoginModal() {
     if (!isOpen) return null;
 
     async function handleSubmitForm(data: FormData) {
-        const res = await fetch('http://localhost:3001/api/auth/login', {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL_SERVER}/api/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
