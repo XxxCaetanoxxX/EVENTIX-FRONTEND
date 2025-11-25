@@ -1,4 +1,5 @@
 import { nest } from "@/src/lib/axios/nest";
+import { cleanCookies } from "@/src/lib/utils/utils";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
@@ -31,6 +32,8 @@ export async function POST() {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             path: "/",
+            sameSite: "lax",
+            maxAge: 60 * 15, //15 min
         });
 
         // atualiza refreshtoken
@@ -38,14 +41,17 @@ export async function POST() {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             path: "/",
+            sameSite: "lax",
+            maxAge: 60 * 60 * 24 * 7, //7 dias
         });
+
+        console.log("Tokens renovados");
 
 
         return NextResponse.json({ message: "Tokens renovados" });
 
     } catch (error) {
-        cookieStore.delete("accessToken");
-        cookieStore.delete("refreshToken");
+        await cleanCookies();
         return NextResponse.json({ message: "Sessão expirada" }, { status: 401 });
     }
 }

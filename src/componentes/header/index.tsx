@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { FiMenu, FiX, FiLogOut } from "react-icons/fi";
 import { useUserStore } from "@/src/app/store/userStore";
-import { cleanCookies } from "@/src/lib/utils/cleanCookies";
+import { cleanCookies } from "@/src/lib/utils/utils";
 import { useRouter } from "next/navigation";
 
 export function Header() {
