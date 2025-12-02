@@ -65,31 +65,33 @@ export function Header() {
                     <div className="w-20 h-10"></div>
                 ) : user ? (
                     // --- COMPONENTE DE USUÁRIO LOGADO ---
-                    <div className="flex items-center gap-3 px-4 sm:px-0">
-                        <div className="flex flex-col text-right text-sm leading-tight hidden sm:block">
-                            <span className="font-bold text-gray-700">{user.name}</span>
-                            <span className="text-xs text-gray-500 text-right truncate w-24 block ml-auto">{user.email}</span>
-                        </div>
+                    <Link href={"/conta"}>
+                        <div className="flex items-center gap-3 px-4 sm:px-0">
+                            <div className="flex flex-col text-right text-sm leading-tight hidden sm:block">
+                                <span className="font-bold text-gray-700">{user.name}</span>
+                                <span className="text-xs text-gray-500 text-right truncate w-24 block ml-auto">{user.email}</span>
+                            </div>
 
-                        {/* Avatar do usuário ou a letra inicial */}
-                        <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-[#7B2CBF]">
-                            {user.image.path ? (
-                                <img src={user.image.path} alt={user.name} className="w-full h-full object-cover" />
-                            ) : (
-                                <div className="w-full h-full bg-gray-300 flex items-center justify-center text-[#7B2CBF]">
-                                    {user.name.charAt(0).toUpperCase()}
-                                </div>
-                            )}
-                        </div>
+                            {/* Avatar do usuário ou a letra inicial */}
+                            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-[#7B2CBF]">
+                                {user.image.path ? (
+                                    <img src={user.image.path} alt={user.name} className="w-full h-full object-cover" />
+                                ) : (
+                                    <div className="w-full h-full bg-gray-300 flex items-center justify-center text-[#7B2CBF]">
+                                        {user.name.charAt(0).toUpperCase()}
+                                    </div>
+                                )}
+                            </div>
 
-                        <button
-                            onClick={handleLogout}
-                            className="ml-2 text-red-500 hover:text-red-700 transition text-xl"
-                            title="Sair"
-                        >
-                            <FiLogOut />
-                        </button>
-                    </div>
+                            <button
+                                onClick={handleLogout}
+                                className="ml-2 text-red-500 hover:text-red-700 transition text-xl"
+                                title="Sair"
+                            >
+                                <FiLogOut />
+                            </button>
+                        </div>
+                    </Link>
                 ) : (
                     <button
                         onClick={open}
