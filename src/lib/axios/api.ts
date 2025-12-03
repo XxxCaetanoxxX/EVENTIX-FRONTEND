@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const api = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_BASE_URL_SERVER}/api/proxy`,
-  timeout: 10000,
+  timeout: 90000,
 });
 
 // api.interceptors.response.use(

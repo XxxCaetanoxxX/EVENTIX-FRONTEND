@@ -1,5 +1,5 @@
 "use client"
-import { useModalStore } from "@/src/app/store/modalStore";
+import { useModalStore } from "@/src/app/store/loginModal";
 import { ColorsEnum } from "@/src/styles/colors.enum";
 import Image from "next/image";
 import Link from "next/link";

@@ -7,6 +7,9 @@ import Cleave from "cleave.js/react";
 import { api } from "@/src/lib/axios/api";
 import { useUserStore } from "@/src/app/store/userStore";
 import { MdCreate } from "react-icons/md";
+import { ModalFoto } from "../modal-foto-perfil";
+import { useImageModalStore } from "@/src/app/store/imageModal";
+import { use } from "react";
 
 interface Props {
     user: UserProps
@@ -41,9 +44,10 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>
 
-export default function PerfilForm({ user }: Props) {
+export function PerfilForm({ user }: Props) {
 
     const { setUser } = useUserStore();
+    const { open } = useImageModalStore();
 
     const { register, control, handleSubmit, formState: { errors } } = useForm<FormData>({
         resolver: zodResolver(schema),
@@ -91,10 +95,13 @@ export default function PerfilForm({ user }: Props) {
                 <div className="flex justify-center items-center">
                     <div className="h-40 w-40 rounded-full bg-gray-300 relative">
                         <img src={user.image.path} alt="user image" className="h-40 w-40 rounded-full" />
-                        <div className="absolute bottom-1 right-1 bg-purple-500 w-11 h-11 rounded-full flex justify-center items-center shadow-md transition-all duration-200 hover:bg-purple-600 hover:scale-110 cursor-pointer">
+                        <div
+                            onClick={open}
+                            className="absolute bottom-1 right-1 bg-purple-500 w-11 h-11 rounded-full flex justify-center items-center shadow-md transition-all duration-200 hover:bg-purple-600 hover:scale-110 cursor-pointer">
                             <MdCreate color="white" size={22} />
                         </div>
                     </div>
+                    <ModalFoto imageUrl={user.image.path} />
                 </div>
 
                 <form onSubmit={handleSubmit(sendForm)} className="grid grid-cols-1 md:grid-cols-3 gap-10 pt-8">

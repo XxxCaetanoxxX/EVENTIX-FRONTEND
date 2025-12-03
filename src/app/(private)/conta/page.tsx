@@ -1,7 +1,7 @@
 import { Header } from "@/src/componentes/header";
 import { api } from "@/src/lib/axios/api";
 import { cookies } from "next/headers";
-import PerfilForm from "./components/PerfilForm";
+import { PerfilForm } from "./components/perfil-form";
 
 export default async function Conta() {
 

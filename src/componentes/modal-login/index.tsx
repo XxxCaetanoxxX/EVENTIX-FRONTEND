@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useModalStore } from "../../app/store/modalStore";
+import { useModalStore } from "../../app/store/loginModal";
 import { ColorsEnum } from "@/src/styles/colors.enum";
 import { FcGoogle } from "react-icons/fc";
 import { useState } from "react";
