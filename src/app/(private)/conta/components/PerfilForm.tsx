@@ -4,6 +4,9 @@ import { z } from "zod"
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Cleave from "cleave.js/react";
+import { api } from "@/src/lib/axios/api";
+import { useUserStore } from "@/src/app/store/userStore";
+import { MdCreate } from "react-icons/md";
 
 interface Props {
     user: UserProps
@@ -40,19 +43,36 @@ type FormData = z.infer<typeof schema>
 
 export default function PerfilForm({ user }: Props) {
 
+    const { setUser } = useUserStore();
+
     const { register, control, handleSubmit, formState: { errors } } = useForm<FormData>({
         resolver: zodResolver(schema),
         defaultValues: {
             name: user.name,
-            phone: formatPhone(user.phone), // <<< AGORA FUNCIONA
+            phone: formatPhone(user.phone),
             password: ""
         }
     });
 
+    async function sendForm(data: FormData) {
+        const payload = { ...data }
+        if (!payload.password) {
+            delete payload.password
+        }
 
+        try {
 
-    function sendForm(data: FormData) {
-        console.log("Enviou", data);
+            const res = await api.patch(`/users/${user.id}`, payload);
+            console.log(res.data);
+
+            const resp = await api.get("/users/me");
+            setUser(resp.data); //atualiza o estado do usuario, nao precisa de router.refresh()
+
+            console.log("Enviou", data);
+        } catch (e) {
+            console.error(e);
+        }
+
     }
     function formatPhone(value: string) {
         if (!value) return "";
@@ -68,9 +88,12 @@ export default function PerfilForm({ user }: Props) {
 
                 <hr className="m-2 border-1 border-gray-300 bg-gray-300 h-px" />
 
-                <div className="flex justify-center items-center pt-8">
-                    <div className="h-40 w-40 rounded-full bg-gray-300">
+                <div className="flex justify-center items-center">
+                    <div className="h-40 w-40 rounded-full bg-gray-300 relative">
                         <img src={user.image.path} alt="user image" className="h-40 w-40 rounded-full" />
+                        <div className="absolute bottom-1 right-1 bg-purple-500 w-11 h-11 rounded-full flex justify-center items-center shadow-md transition-all duration-200 hover:bg-purple-600 hover:scale-110 cursor-pointer">
+                            <MdCreate color="white" size={22} />
+                        </div>
                     </div>
                 </div>
 
@@ -106,13 +129,6 @@ export default function PerfilForm({ user }: Props) {
                                 />
                             )}
                         />
-
-                        {/* <input
-                        type="number"
-                            {...register("phone")}
-                            className="border border-gray-300 rounded-md w-full h-10 pl-3"
-                            defaultValue={user.phone}
-                        ></input> */}
                         {errors.phone && (
                             <span className="text-xs font-semibold text-red-600 mt-1">
                                 {errors.phone.message}
